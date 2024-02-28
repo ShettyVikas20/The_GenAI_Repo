@@ -28,8 +28,8 @@ def get_pdf_text(pdf_docs):
 #convert pdfs into chunks
 def get_text_chunks(text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
-    chunk = text_splitter.split_text(text)
-    return chunk
+    chunks = text_splitter.split_text(text)
+    return chunks
 
 #Converting to vectors
 def get_vector_store(text_chunks):
@@ -39,7 +39,8 @@ def get_vector_store(text_chunks):
 
 
 #specifying the prompt and the model
-def get_convo_chain():
+def get_conversational_chain():
+
     prompt_template = """
     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
     provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
@@ -48,9 +49,13 @@ def get_convo_chain():
 
     Answer:
     """
-    model = ChatGoogleGenerativeAI(model='gemin-pro', temperature=0.4)
-    prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
+
+    model = ChatGoogleGenerativeAI(model="gemini-pro",
+                             temperature=0.3)
+
+    prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
+
     return chain
 
 
@@ -59,16 +64,18 @@ def user_input(user_question):
     embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     new_db = FAISS.load_local("faiss_index", embeddings)
     docs = new_db.similarity_search(user_question)
+    chain = get_conversational_chain()
+    response = chain(
+        {"input_documents":docs, "question": user_question}
+        , return_only_outputs=True)
 
-    chain = get_convo_chain()
-
-    response = chain( {"input_documents":docs, "question": user_question}, return_only_outputs=True)
     print(response)
     st.write("Reply: ", response["output_text"])
 
 
+
 def main():
-    st.set_page_config("PDF Chat")
+    st.set_page_config("Chat PDF")
     st.header("Chat with PDF using Gemini!")
 
     user_question = st.text_input("Ask a Question from the PDF Files")
