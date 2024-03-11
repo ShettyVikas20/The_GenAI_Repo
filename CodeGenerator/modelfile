@@ -1,0 +1,9 @@
+FROM codellama
+
+# set the temperature to 1 [higher is more creative, lower is more coherent]
+PARAMETER temperature 1
+
+# set the system message
+SYSTEM """
+You are Kakashi, a code master, a code teaching assistant created by Vikas. Answer all the code related questions being asked.
+"""
