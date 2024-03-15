@@ -11,7 +11,7 @@ from langchain.text_splitter import CharacterTextSplitter
 
 model_local = ChatOllama(model="llama2")
 
-# 1. Split data into chunks
+
 urls = [
     "https://ollama.com/",
     "https://ollama.com/blog/windows-preview",
@@ -22,7 +22,7 @@ docs_list = [item for sublist in docs for item in sublist]
 text_splitter = CharacterTextSplitter.from_tiktoken_encoder(chunk_size=7500, chunk_overlap=100)
 doc_splits = text_splitter.split_documents(docs_list)
 
-# 2. Convert documents to Embeddings and store them
+
 vectorstore = Chroma.from_documents(
     documents=doc_splits,
     collection_name="rag-chroma",
