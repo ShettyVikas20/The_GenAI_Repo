@@ -1,4 +1,4 @@
-import gradio as gr
+import gradioApp as gr
 from langchain_community.document_loaders import WebBaseLoader, PyPDFLoader
 from langchain_community.vectorstores import Chroma
 from langchain_community import embeddings
