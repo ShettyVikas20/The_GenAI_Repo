@@ -69,4 +69,4 @@ interface=gr.Interface(
     inputs=inputs,
     outputs="text"
 )
-interface.launch()
+interface.launch(share = True)
