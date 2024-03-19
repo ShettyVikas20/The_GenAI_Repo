@@ -12,12 +12,11 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain.chains import RetrievalQA
 from langchain.memory import ConversationSummaryMemory
-from langchain.prompts import PromptTemplate
 from langchain.llms import Ollama
 from langchain.text_splitter import CharacterTextSplitter
 
 def llm_response(uploadedFile, prompt):
-    model_local = ChatOllama(model="ollama2")
+    model_local = ChatOllama(model="ollama2") 
     print(uploadedFile)
     print(prompt)
     # data_path = "./data/Elden_Ring.pdf"
@@ -39,6 +38,7 @@ def llm_response(uploadedFile, prompt):
     rag_template =  """Answer the question based only on the following context:
     {context}
     Question: {question}
+    If you don't know the answer, answer 'I don't have any answer on this context"
     """
 
     rag_prompt = ChatPromptTemplate.from_template(rag_template)
