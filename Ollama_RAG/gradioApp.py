@@ -30,6 +30,7 @@ def process_input(urls, question):
     after_rag_template = """Answer the question based only on the following context:
     {context}
     Question: {question}
+    if  you don't know the answer, mention it
     """
     after_rag_prompt = ChatPromptTemplate.from_template(after_rag_template)
     after_rag_chain = (
