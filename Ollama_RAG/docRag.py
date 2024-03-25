@@ -38,7 +38,7 @@ def llm_response(uploadedFile, prompt):
     rag_template =  """Answer the question based only on the following context:
     {context}
     Question: {question}
-    If you don't know the answer, answer 'I don't have any answer on this context"
+    If you don't know the answer, answer 'I don't have any answer on this context."
     """
 
     rag_prompt = ChatPromptTemplate.from_template(rag_template)
