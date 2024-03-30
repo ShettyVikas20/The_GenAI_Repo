@@ -1,7 +1,7 @@
 import os
 from const import openai_Key
 from langchain_community.llms import OpenAI
-# from langchain.llms import OpenAI
+from langchain.llms import OpenAI
 
 import streamlit as st
 
